@@ -161,7 +161,60 @@ export class HomeComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.initTitleAnimation();
       this.initCardAnimations();
+      this.initParallaxBackground();
+      this.initSectionParallax();
     }, 100);
+  }
+
+  private initParallaxBackground(): void {
+    const orbs = document.querySelectorAll('.parallax-orb');
+    
+    orbs.forEach((orb, index) => {
+      const speed = 0.15 + (index * 0.1);
+      const direction = index % 2 === 0 ? 1 : -1;
+      
+      gsap.to(orb, {
+        y: -window.innerHeight * speed * direction * 0.5,
+        x: window.innerWidth * 0.15 * direction,
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+    });
+  }
+
+  private initSectionParallax(): void {
+    const gamesSection = document.querySelector('.games-section');
+    const sectionContainer = document.querySelector('.section-container');
+    
+    if (gamesSection) {
+      // Section parallax - subtle
+      gsap.to(gamesSection, {
+        y: -30,
+        scrollTrigger: {
+          trigger: gamesSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+    }
+
+    if (sectionContainer) {
+      // Container parallax - very subtle
+      gsap.to(sectionContainer, {
+        y: -40,
+        scrollTrigger: {
+          trigger: sectionContainer,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+    }
   }
 
   private initTitleAnimation(): void {
@@ -169,6 +222,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     const title = this.sectionTitle.nativeElement;
     const text = title.textContent?.trim() || '';
+    const sectionHeader = title.closest('.section-header');
     
     if (!text) return;
     
@@ -180,13 +234,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     
     if (chars.length === 0) return;
     
+    // Entrance animation
     gsap.from(chars, {
       opacity: 0,
-      y: 20,
-      duration: 0.6,
-      ease: 'power2.out',
+      y: 50,
+      rotationX: -90,
+      scale: 0.5,
+      duration: 0.8,
+      ease: 'back.out(1.7)',
       stagger: {
-        amount: 0.4,
+        amount: 0.6,
         from: 'start'
       },
       scrollTrigger: {
@@ -197,24 +254,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     });
 
+    // Smooth Parallax Effect for Title
+    gsap.to(title, {
+      y: -40,
+      scrollTrigger: {
+        trigger: sectionHeader || title,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 2
+      }
+    });
+
+    // Individual character floating - subtle
     chars.forEach((char: HTMLElement, index: number) => {
       const offset = (index * 0.1) % 1;
-      const amplitude = 2 + (index % 3) * 0.3;
+      const amplitude = 1.5 + (index % 3) * 0.2;
       
+      // Continuous floating - subtle
       gsap.to(char, {
         y: `+=${amplitude}`,
-        rotation: `+=${0.5 + (index % 2) * 0.3}`,
         duration: 3 + (index * 0.1),
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         delay: offset * 2
       });
+
+      // Subtle parallax scroll effect
+      gsap.to(char, {
+        y: (index % 2 === 0 ? 1 : -1) * 15,
+        scrollTrigger: {
+          trigger: sectionHeader || title,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
     });
   }
 
   private initCardAnimations(): void {
     const cards = this.gameCards.toArray();
+    const gamesSection = document.querySelector('.games-section');
     
     cards.forEach((cardRef, index) => {
       if (!cardRef?.nativeElement) return;
@@ -228,14 +309,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
         opacity: 0,
         x: xOffset,
         y: 30,
-        scale: 0.95
+        scale: 0.95,
+        rotationY: direction === 'left' ? -15 : 15
       });
 
+      // Entrance animation
       gsap.to(card, {
         opacity: 1,
         x: 0,
         y: 0,
         scale: 1,
+        rotationY: 0,
         duration: 0.8,
         ease: 'power3.out',
         delay: index * 0.05,
@@ -247,8 +331,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       });
 
+      // Smooth Parallax Effect - Different speeds for each card
+      const parallaxSpeed = 0.1 + (index % 3) * 0.08;
+      
       gsap.to(card, {
-        y: '+=5',
+        y: -100 * parallaxSpeed,
+        scrollTrigger: {
+          trigger: gamesSection || card,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+
+      // Continuous floating animation
+      gsap.to(card, {
+        y: '+=8',
+        rotationZ: (index % 2 === 0 ? 1 : -1) * 2,
         duration: 3 + (index * 0.2),
         repeat: -1,
         yoyo: true,

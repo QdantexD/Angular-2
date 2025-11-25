@@ -89,17 +89,65 @@ export class HeroSectionComponent implements OnInit, AfterViewInit {
       });
     }
 
-    // Parallax effect
+    // Smooth Parallax Effects
     if (this.heroContent?.nativeElement) {
-      gsap.to(this.heroContent.nativeElement, {
-        y: -60,
+      const heroContent = this.heroContent.nativeElement;
+      const heroSection = heroContent.closest('.hero-section');
+      
+      // Main content parallax - subtle movement
+      gsap.to(heroContent, {
+        y: -80,
+        opacity: 0.85,
         scrollTrigger: {
-          trigger: this.heroContent.nativeElement,
+          trigger: heroSection || heroContent,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1
+          scrub: 2
         }
       });
+
+      // Title words parallax - subtle and smooth
+      words.forEach((word, index) => {
+        const speed = 0.15 + (index * 0.05);
+        gsap.to(word, {
+          y: -50 * speed,
+          scrollTrigger: {
+            trigger: heroSection || heroContent,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 2
+          }
+        });
+      });
+
+      // Subtitle parallax - very subtle
+      if (this.heroSubtitle?.nativeElement) {
+        gsap.to(this.heroSubtitle.nativeElement, {
+          y: -40,
+          opacity: 0.8,
+          scrollTrigger: {
+            trigger: heroSection || heroContent,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 2
+          }
+        });
+      }
+
+      // Buttons parallax - minimal
+      if (this.heroButtons?.nativeElement) {
+        Array.from(this.heroButtons.nativeElement.children).forEach((btn: any, index: number) => {
+          gsap.to(btn, {
+            y: -30 * (index + 1) * 0.3,
+            scrollTrigger: {
+              trigger: heroSection || heroContent,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 2
+            }
+          });
+        });
+      }
     }
   }
 }

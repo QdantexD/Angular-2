@@ -2,6 +2,86 @@
   position: relative;
   z-index: 1;
   padding-top: 120px; // Space for fixed header (top bar + nav bar)
+  overflow-x: hidden;
+}
+
+.parallax-bg-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.parallax-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  pointer-events: none;
+  
+  &.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.6), transparent);
+    top: 10%;
+    left: 10%;
+    animation: orb-float-1 20s ease-in-out infinite;
+  }
+  
+  &.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(176, 38, 255, 0.5), transparent);
+    top: 60%;
+    right: 15%;
+    animation: orb-float-2 25s ease-in-out infinite;
+  }
+  
+  &.orb-3 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.4), transparent);
+    bottom: 10%;
+    left: 50%;
+    animation: orb-float-3 30s ease-in-out infinite;
+  }
+}
+
+@keyframes orb-float-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.9);
+  }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-40px, 40px) scale(1.2);
+  }
+}
+
+@keyframes orb-float-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, 30px) scale(1.15);
+  }
+  66% {
+    transform: translate(-40px, -20px) scale(0.85);
+  }
 }
 
 .games-section {
@@ -13,11 +93,16 @@
     rgba(10, 10, 15, 0.5),
     rgba(10, 10, 15, 0.9)
   );
+  z-index: 2;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .section-container {
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
+  transform-style: preserve-3d;
 }
 
 .section-header {

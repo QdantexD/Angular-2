@@ -1,0 +1,167 @@
+<div class="game-management-container">
+  <div class="management-header">
+    <h1 class="page-title neon-text">Gestión de Juegos</h1>
+    <button *ngIf="canEdit()" (click)="openCreateForm()" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 4 L10 16 M4 10 L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Nuevo Juego</span>
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section glass">
+    <div class="filter-group">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Buscar juegos..."
+        class="filter-input"
+      />
+    </div>
+    <div class="filter-group">
+      <select
+        [(ngModel)]="selectedCategory"
+        (change)="onCategoryChange()"
+        class="filter-select"
+      >
+        <option value="">Todas las categorías</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select
+        [(ngModel)]="filters.sort"
+        (change)="loadGames()"
+        class="filter-select"
+      >
+        <option value="created_at">Fecha</option>
+        <option value="title">Título</option>
+        <option value="price">Precio</option>
+        <option value="rating">Rating</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select
+        [(ngModel)]="filters.order"
+        (change)="loadGames()"
+        class="filter-select"
+      >
+        <option value="desc">Descendente</option>
+        <option value="asc">Ascendente</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Games Grid -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading" class="games-management-grid">
+    <div *ngFor="let game of filteredGames" class="game-management-card glass">
+      <div class="game-card-header">
+        <h3>{{ game.title }}</h3>
+        <div class="game-actions">
+          <button *ngIf="canEdit()" (click)="openEditForm(game)" class="btn-icon" title="Editar">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 3 L15 7 M2 16 L6 12 L12 6 L8 2 L2 8 L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button *ngIf="canDelete()" (click)="deleteGame(game.id!)" class="btn-icon btn-danger" title="Eliminar">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 4 L14 14 M14 4 L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="game-card-body">
+        <div *ngIf="game.image_url" class="game-image" [style.background-image]="'url(' + game.image_url + ')'"></div>
+        <p class="game-description">{{ game.description }}</p>
+        <div class="game-meta">
+          <span class="game-category">{{ game.category }}</span>
+          <span class="game-price" *ngIf="!game.is_free">
+            {{ game.price }} PEN
+            <span *ngIf="game.original_price" class="original-price">{{ game.original_price }} PEN</span>
+          </span>
+          <span *ngIf="game.is_free" class="free-badge">GRATIS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create/Edit Form Modal -->
+  <div *ngIf="showForm" class="modal-overlay" (click)="closeForm()">
+    <div class="modal-content glass" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingGame ? 'Editar Juego' : 'Nuevo Juego' }}</h2>
+        <button (click)="closeForm()" class="btn-close">×</button>
+      </div>
+      <form [formGroup]="gameForm" (ngSubmit)="saveGame()" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Título *</label>
+            <input formControlName="title" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Subtítulo</label>
+            <input formControlName="subtitle" class="form-input" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descripción *</label>
+          <textarea formControlName="description" class="form-textarea" rows="4"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL de Imagen</label>
+            <input formControlName="image_url" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Categoría *</label>
+            <input formControlName="category" class="form-input" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Precio</label>
+            <input type="number" formControlName="price" class="form-input" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Precio Original</label>
+            <input type="number" formControlName="original_price" class="form-input" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Descuento (%)</label>
+            <input type="number" formControlName="discount" class="form-input" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Badge</label>
+            <select formControlName="badge" class="form-input">
+              <option value="NEW">NEW</option>
+              <option value="PREORDER">PREORDER</option>
+              <option value="SALE">SALE</option>
+              <option value="FREE">FREE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <input type="color" formControlName="color" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Gratis</label>
+            <input type="checkbox" formControlName="is_free" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="closeForm()" class="btn-secondary">Cancelar</button>
+          <button type="submit" [disabled]="gameForm.invalid" class="btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

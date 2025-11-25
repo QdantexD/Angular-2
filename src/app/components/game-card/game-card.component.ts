@@ -43,19 +43,23 @@ export class GameCardComponent implements OnInit, AfterViewInit {
     const card = this.cardRef.nativeElement;
     const direction = this.game.animationDirection || (this.game.id % 2 === 0 ? 'right' : 'left');
     const xOffset = direction === 'left' ? -400 : 400;
+    const parallaxSpeed = 0.15 + (this.game.id % 3) * 0.1;
 
     gsap.set(card, {
       opacity: 0,
       x: xOffset,
       y: 50,
-      scale: 0.9
+      scale: 0.9,
+      rotationY: direction === 'left' ? -20 : 20
     });
 
+    // Entrance animation
     gsap.to(card, {
       opacity: 1,
       x: 0,
       y: 0,
       scale: 1,
+      rotationY: 0,
       duration: 1,
       ease: 'power3.out',
       scrollTrigger: {
@@ -66,16 +70,40 @@ export class GameCardComponent implements OnInit, AfterViewInit {
       }
     });
 
+    // Smooth Parallax Effect - Individual card parallax
+    gsap.to(card, {
+      y: -80 * parallaxSpeed,
+      scrollTrigger: {
+        trigger: card,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 2
+      }
+    });
+
+    // Image parallax - subtle movement
     if (this.imageRef?.nativeElement) {
+      gsap.to(this.imageRef.nativeElement, {
+        y: -40 * parallaxSpeed,
+        scrollTrigger: {
+          trigger: card,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+
       card.addEventListener('mouseenter', () => {
         gsap.to(card, {
           y: -15,
-          scale: 1.03,
+          scale: 1.05,
+          rotationY: 0,
+          rotationX: 0,
           duration: 0.4,
           ease: 'power2.out'
         });
         gsap.to(this.imageRef.nativeElement, {
-          scale: 1.15,
+          scale: 1.2,
           duration: 0.4,
           ease: 'power2.out'
         });
@@ -96,9 +124,11 @@ export class GameCardComponent implements OnInit, AfterViewInit {
       });
     }
 
+    // Continuous floating animation
     gsap.to(card, {
-      y: '+=6',
-      duration: 4,
+      y: '+=8',
+      rotationZ: (direction === 'left' ? -1 : 1) * 1.5,
+      duration: 4 + (this.game.id * 0.1),
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut'

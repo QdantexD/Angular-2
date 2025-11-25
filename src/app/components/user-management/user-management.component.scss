@@ -1,0 +1,91 @@
+@import '../game-management/game-management.component.scss';
+
+.user-management-container {
+  @extend .game-management-container;
+}
+
+.users-table {
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: rgba(0, 240, 255, 0.1);
+  }
+
+  th {
+    padding: 1rem;
+    text-align: left;
+    color: #00f0ff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  td {
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  tbody tr {
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+  }
+}
+
+.role-select {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: currentColor;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: currentColor;
+  }
+}
+
+.status-active {
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 255, 136, 0.2);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  border-radius: 6px;
+  color: #00ff88;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.status-inactive {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid rgba(255, 68, 68, 0.4);
+  border-radius: 6px;
+  color: #ff4444;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .users-table {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 800px;
+  }
+}
+

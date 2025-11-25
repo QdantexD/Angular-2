@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { gsap } from 'gsap';
+import { AuthService, User } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +18,46 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   isScrolled = false;
   games = ['Warcraft', 'Diablo', 'Overwatch', 'Hearthstone', 'StarCraft'];
+  currentUser: User | null = null;
+  isAuthenticated: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      this.isAuthenticated = !!user;
+    });
+    this.isAuthenticated = this.authService.isAuthenticated();
+    this.currentUser = this.authService.getCurrentUser();
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => this.initAnimations(), 100);
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  isModerator(): boolean {
+    return this.authService.isModerator();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  getRoleColor(role?: string): string {
+    const colors: { [key: string]: string } = {
+      'admin': '#ff4444',
+      'moderator': '#ffaa00',
+      'user': '#00f0ff'
+    };
+    return colors[role || 'user'] || '#00f0ff';
   }
 
   @HostListener('window:scroll', ['$event'])

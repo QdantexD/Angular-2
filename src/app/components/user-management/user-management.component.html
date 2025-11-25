@@ -1,0 +1,87 @@
+<div class="user-management-container">
+  <div class="management-header">
+    <h1 class="page-title neon-text">Gestión de Usuarios</h1>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section glass">
+    <div class="filter-group">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+        placeholder="Buscar usuarios..."
+        class="filter-input"
+      />
+    </div>
+    <div class="filter-group">
+      <select
+        [(ngModel)]="selectedRole"
+        (change)="applyFilters()"
+        class="filter-select"
+      >
+        <option value="">Todos los roles</option>
+        <option value="admin">Admin</option>
+        <option value="moderator">Moderator</option>
+        <option value="user">User</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading" class="users-table glass">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.full_name || '-' }}</td>
+          <td>
+            <select
+              [value]="user.role"
+              (change)="updateUserRole(user.id, $any($event.target).value)"
+              class="role-select"
+              [style.color]="getRoleColor(user.role)"
+            >
+              <option value="user">User</option>
+              <option value="moderator">Moderator</option>
+              <option value="admin">Admin</option>
+            </select>
+          </td>
+          <td>
+            <span [class]="user.is_active ? 'status-active' : 'status-inactive'">
+              {{ user.is_active ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>{{ formatDate(user.created_at) }}</td>
+          <td>
+            <button class="btn-icon" title="Ver detalles">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 5 L8 8 M8 11 L8 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

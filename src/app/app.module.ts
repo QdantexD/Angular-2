@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -8,6 +10,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
 import { GameCardComponent } from './components/game-card/game-card.component';
 import { Background3dComponent } from './components/background-3d/background-3d.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { GameManagementComponent } from './components/game-management/game-management.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 
 @NgModule({
   declarations: [
@@ -16,11 +23,19 @@ import { Background3dComponent } from './components/background-3d/background-3d.
     HeaderComponent,
     HeroSectionComponent,
     GameCardComponent,
-    Background3dComponent
+    Background3dComponent,
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+    GameManagementComponent,
+    UserManagementComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
