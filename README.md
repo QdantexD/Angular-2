@@ -43,7 +43,6 @@ Plataforma web Full Stack profesional inspirada en Battle.net, desarrollada para
 - TypeScript
 - GSAP (Animaciones)
 - Three.js (Efectos 3D)
-- Chart.js (Gráficas)
 - Tailwind CSS
 - SCSS
 
@@ -92,22 +91,6 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## 🌐 Deploy a GitHub Pages
-
-El proyecto está configurado para deploy automático en GitHub Pages.
-
-### Pasos Rápidos:
-1. Sube tu código a GitHub
-2. Ve a **Settings** → **Pages** → Selecciona **GitHub Actions**
-3. El deploy será automático en cada push
-
-📖 **Guía completa:** Ver [DEPLOY_GITHUB_PAGES.md](DEPLOY_GITHUB_PAGES.md)
-
-### Build para GitHub Pages:
-```bash
-npm run build:gh-pages
-```
-
 ## 🎯 Funcionalidades Principales
 
 ### Autenticación
@@ -154,11 +137,84 @@ battle-net-platform/
 └── README.md
 ```
 
+## 🌐 Deploy a GitHub Pages
+
+El proyecto está configurado para deploy automático en GitHub Pages.
+
+### Pasos Rápidos:
+1. Sube tu código a GitHub
+2. Ve a **Settings** → **Pages** → Selecciona **GitHub Actions**
+3. El deploy será automático en cada push
+
+
+### Configuración del Base Href
+
+Si tu repositorio tiene otro nombre, actualiza:
+- `angular.json` → `configurations.github-pages.baseHref`
+- `src/index.html` → `<base href="/TU_REPOSITORIO/">`
+
+### ⚠️ Limitaciones de GitHub Pages
+
+GitHub Pages **solo sirve archivos estáticos**, por lo que:
+- ❌ **Backend NO funcionará** (Node.js/Express)
+- ❌ **Base de datos NO funcionará** (PostgreSQL)
+- ❌ **Login/Register real NO funcionará**
+- ❌ **Dashboard con datos reales NO funcionará**
+
+Para una demo completa, necesitarás:
+- **Frontend:** GitHub Pages o Netlify/Vercel
+- **Backend:** Heroku, Railway, Render
+- **Base de Datos:** Supabase, ElephantSQL, Neon
+
+## 🔧 Scripts Disponibles
+
+### Frontend
+```bash
+npm start              # Servidor de desarrollo
+npm run build          # Build para desarrollo
+npm run build:prod     # Build para producción
+npm run build:gh-pages # Build para GitHub Pages
+npm test               # Ejecutar tests
+```
+
+### Backend
+```bash
+cd backend
+npm run dev            # Desarrollo con nodemon
+npm start               # Producción
+```
+
+### Python
+```bash
+cd python
+python setup.py                    # Setup inicial de BD
+python verificar_registro.py --all # Verificar usuarios
+python utils.py check              # Verificar estado de BD
+python app.py                      # Iniciar Flask API
+```
+
 ## 🔐 Credenciales por Defecto
 
 **Admin:**
 - Email: `admin@battlenet.com`
 - Password: `admin123`
+
+## 🐛 Solución de Problemas
+
+### Error de Dependencias (ERESOLVE)
+
+Si encuentras errores de dependencias al instalar:
+
+```bash
+# Limpiar e reinstalar
+Remove-Item -Recurse -Force node_modules
+Remove-Item -Force package-lock.json
+npm install
+```
+
+El workflow de GitHub Actions usa `--legacy-peer-deps` automáticamente para evitar conflictos.
+
+El dashboard usa gráficas CSS personalizadas en lugar de Chart.js.
 
 ## 📝 Notas Importantes
 
@@ -178,6 +234,13 @@ Este proyecto fue desarrollado para:
 ## 📄 Licencia
 
 Este proyecto es de código abierto para fines educativos y demostración personal.
+
+## 🔗 Enlaces Útiles
+
+- **Estructura del Proyecto**: Ver [ESTRUCTURA_PROYECTO.md](ESTRUCTURA_PROYECTO.md)
+- **Solución de Dependencias**: Ver [SOLUCION_DEPENDENCIAS.md](SOLUCION_DEPENDENCIAS.md)
+- **Backend README**: Ver [backend/README.md](backend/README.md)
+- **Python README**: Ver [python/README.md](python/README.md)
 
 ---
 
