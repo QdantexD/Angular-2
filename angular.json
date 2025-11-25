@@ -22,6 +22,12 @@
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -45,7 +51,14 @@
                   "maximumError": "10kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/Angular-2/"
+            },
+            "github-pages": {
+              "baseHref": "/Angular-2/",
+              "outputHashing": "all",
+              "optimization": true,
+              "sourceMap": false
             },
             "development": {
               "buildOptimizer": false,

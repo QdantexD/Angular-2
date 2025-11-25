@@ -1,161 +1,186 @@
-# Battle Net Platform - Advanced Angular Demo
+# Battle.net Platform - Full Stack Application
 
-Una plataforma web profesional y elegante construida con Angular, inspirada en Battle.net, con animaciones épicas, efectos neón y tecnologías avanzadas.
+**Desarrollado por:** Eddi Andreé Salazar Matos
 
-## 🚀 Características
+## 📋 Descripción
 
-- **Animaciones Avanzadas**: Implementadas con GSAP (GreenSock Animation Platform)
-- **Efectos 3D**: Fondo animado con Three.js
-- **Efectos Neón**: Diseño moderno con efectos de iluminación neón
-- **Partículas Interactivas**: Sistema de partículas que reacciona al mouse
-- **Diseño Responsive**: Optimizado para todos los dispositivos
-- **Tailwind CSS**: Estilos modernos y personalizables
-- **Glass Morphism**: Efectos de vidrio esmerilado
-- **Scroll Animations**: Animaciones basadas en scroll con ScrollTrigger
+Plataforma web Full Stack profesional inspirada en Battle.net, desarrollada para demostración de habilidades técnicas y aprendizaje. Este proyecto registra cuentas de usuarios generales y está diseñado exclusivamente para **fines educativos y demostración personal**.
 
-## 🛠️ Tecnologías Utilizadas
+> ⚠️ **Nota:** Este proyecto es solo para fines educativos y demostración personal. No está destinado para uso comercial.
 
-- **Angular 17**: Framework principal
-- **GSAP 3.12**: Animaciones profesionales
-- **Three.js**: Gráficos 3D y efectos visuales
-- **Tailwind CSS**: Framework de utilidades CSS
-- **TypeScript**: Tipado estático
-- **SCSS**: Preprocesador CSS
+## 🚀 Características Implementadas
+
+### Frontend (Angular 17)
+- ✅ **Autenticación**: Sistema de login y registro de usuarios
+- ✅ **Dashboard**: Panel con estadísticas y gráficas dinámicas
+- ✅ **CRUD Completo**: Gestión de juegos y usuarios
+- ✅ **Animaciones Avanzadas**: GSAP, Three.js, efectos neón
+- ✅ **Diseño Responsive**: Optimizado para todos los dispositivos
+- ✅ **UI Moderna**: Glass morphism, efectos parallax
+
+### Backend (Node.js + Express)
+- ✅ **API RESTful**: Endpoints organizados y documentados
+- ✅ **Autenticación JWT**: Sistema seguro de tokens
+- ✅ **Sistema de Roles**: Admin, Moderator, User
+- ✅ **Base de Datos**: PostgreSQL con relaciones y validaciones
+- ✅ **CRUD Avanzado**: Operaciones completas con filtros
+- ✅ **Dashboard API**: Estadísticas y analytics
+
+### Base de Datos (PostgreSQL)
+- ✅ **Tablas Relacionales**: users, games, user_activities, analytics
+- ✅ **Índices Optimizados**: Para mejor rendimiento
+- ✅ **Validaciones**: Constraints y foreign keys
+
+### Python Services
+- ✅ **Scripts de Utilidad**: Setup, verificación, mantenimiento
+- ✅ **Flask API**: Analytics avanzados (opcional)
+- ✅ **Database Manager**: Clase reutilizable para gestión
+
+## 🛠️ Stack Tecnológico
+
+### Frontend
+- Angular 17
+- TypeScript
+- GSAP (Animaciones)
+- Three.js (Efectos 3D)
+- Chart.js (Gráficas)
+- Tailwind CSS
+- SCSS
+
+### Backend
+- Node.js
+- Express.js
+- PostgreSQL
+- JWT (Autenticación)
+- Bcrypt (Hashing)
+- Express-validator
+
+### Base de Datos
+- PostgreSQL 17
+
+### Python (Opcional)
+- Flask
+- psycopg2
+- pandas (para analytics avanzados)
 
 ## 📦 Instalación
 
-1. **Instalar dependencias:**
+### 1. Frontend
 ```bash
 npm install
-```
-
-2. **Instalar Angular CLI globalmente (si no lo tienes):**
-```bash
-npm install -g @angular/cli
-```
-
-## 🎮 Desarrollo
-
-Para iniciar el servidor de desarrollo:
-
-```bash
 npm start
-# o
-ng serve
 ```
+Frontend disponible en: `http://localhost:4200`
 
-La aplicación estará disponible en `http://localhost:4200`
-
-## 🏗️ Build
-
-Para construir la aplicación para producción:
-
+### 2. Backend
 ```bash
-npm run build
-# o
-ng build
+cd backend
+npm install
+npm run dev
+```
+Backend disponible en: `http://localhost:3000`
+
+### 3. Base de Datos
+1. Crear base de datos PostgreSQL: `battlenet_db`
+2. Ejecutar script: `backend/scripts/complete_setup.sql` en pgAdmin
+3. O usar Python: `python setup.py`
+
+### 4. Python (Opcional)
+```bash
+cd python
+pip install -r requirements.txt
+python app.py
 ```
 
-Los archivos compilados estarán en la carpeta `dist/battle-net-platform`
+## 🌐 Deploy a GitHub Pages
+
+El proyecto está configurado para deploy automático en GitHub Pages.
+
+### Pasos Rápidos:
+1. Sube tu código a GitHub
+2. Ve a **Settings** → **Pages** → Selecciona **GitHub Actions**
+3. El deploy será automático en cada push
+
+📖 **Guía completa:** Ver [DEPLOY_GITHUB_PAGES.md](DEPLOY_GITHUB_PAGES.md)
+
+### Build para GitHub Pages:
+```bash
+npm run build:gh-pages
+```
+
+## 🎯 Funcionalidades Principales
+
+### Autenticación
+- Registro de usuarios
+- Login con JWT
+- Protección de rutas
+- Gestión de sesión
+
+### Dashboard
+- Estadísticas en tiempo real
+- Gráficas de juegos por categoría
+- Top juegos
+- Actividades recientes
+
+### CRUD Games
+- Crear, editar, eliminar juegos
+- Filtros avanzados
+- Búsqueda y ordenamiento
+- Paginación
+
+### Gestión de Usuarios
+- Listar usuarios
+- Cambiar roles (Admin)
+- Ver perfiles
 
 ## 📁 Estructura del Proyecto
 
 ```
-src/
-├── app/
-│   ├── components/
-│   │   ├── animated-background/    # Fondo 3D con Three.js
-│   │   ├── header/                 # Header con efectos neón
-│   │   ├── hero-section/           # Sección principal con animaciones
-│   │   ├── game-card/              # Tarjetas de juegos interactivas
-│   │   ├── particle-background/    # Partículas animadas
-│   │   ├── navigation/             # Navegación
-│   │   └── home/                   # Página principal
-│   ├── app.component.ts
-│   ├── app.module.ts
-│   └── app-routing.module.ts
-├── assets/                         # Recursos estáticos
-├── styles.scss                     # Estilos globales
-└── index.html
+battle-net-platform/
+├── src/                    # Frontend Angular
+│   └── app/
+│       ├── components/     # Componentes de la aplicación
+│       ├── services/       # Servicios HTTP
+│       └── guards/         # Route guards
+├── backend/                # Backend Node.js
+│   ├── routes/            # API routes
+│   ├── middleware/        # Auth middleware
+│   ├── config/            # Configuración DB
+│   └── scripts/           # SQL scripts
+├── python/                # Scripts Python (opcional)
+│   ├── db_manager.py      # Gestor de BD
+│   ├── verificar_registro.py  # Verificar usuarios
+│   └── app.py             # Flask API (opcional)
+└── README.md
 ```
 
-## 🎨 Componentes Principales
+## 🔐 Credenciales por Defecto
 
-### AnimatedBackgroundComponent
-Fondo 3D con partículas usando Three.js que reacciona al movimiento del mouse.
+**Admin:**
+- Email: `admin@battlenet.com`
+- Password: `admin123`
 
-### HeroSectionComponent
-Sección hero con animaciones GSAP, efectos parallax y texto con glow neón.
+## 📝 Notas Importantes
 
-### GameCardComponent
-Tarjetas de juegos con efectos hover, animaciones de entrada y efectos neón personalizados.
+- Este proyecto es **solo para fines educativos**
+- Inspirado en Battle.net para demostración de habilidades
+- Registra cuentas de usuarios generales
+- No está destinado para uso comercial
 
-### ParticleBackgroundComponent
-Sistema de partículas interactivo con Canvas API que crea conexiones dinámicas.
+## 🎓 Propósito Educativo
 
-### HeaderComponent
-Header fijo con efectos glass morphism y animaciones de navegación.
-
-## 🎯 Características de Animación
-
-- **Animaciones de entrada**: Elementos aparecen con efectos suaves
-- **Hover effects**: Interacciones visuales al pasar el mouse
-- **Scroll animations**: Animaciones basadas en el scroll
-- **Parallax effects**: Efectos de profundidad
-- **Particle systems**: Sistemas de partículas interactivos
-- **3D backgrounds**: Fondos tridimensionales animados
-
-## 🎨 Personalización
-
-Los colores neón y efectos pueden ser personalizados en:
-- `tailwind.config.js` - Configuración de colores
-- `src/styles.scss` - Estilos globales y efectos neón
-- Componentes individuales - Estilos específicos
-
-## 📱 Responsive Design
-
-La aplicación está completamente optimizada para:
-- Desktop (1920px+)
-- Laptop (1024px - 1919px)
-- Tablet (768px - 1023px)
-- Mobile (< 768px)
-
-## 🔧 Configuración Adicional
-
-### Variables de Entorno
-Puedes crear un archivo `.env` para configuraciones específicas del entorno.
-
-### Optimizaciones
-- Lazy loading de componentes
-- Tree shaking automático
-- Minificación en producción
-- Code splitting
-
-## 📝 Notas
-
-- Las imágenes de los juegos se cargan desde Unsplash (puedes reemplazarlas con tus propias imágenes)
-- Los efectos neón pueden requerir ajustes según el navegador
-- Three.js requiere WebGL para funcionar correctamente
-
-## 🚀 Próximas Mejoras
-
-- [ ] Sistema de autenticación
-- [ ] Integración con API de juegos
-- [ ] Modo oscuro/claro
-- [ ] Más efectos de partículas
-- [ ] Animaciones de transición entre páginas
-- [ ] Sistema de notificaciones
-- [ ] Chat en tiempo real
+Este proyecto fue desarrollado para:
+- Demostrar habilidades en desarrollo Full Stack
+- Aprender tecnologías modernas (Angular, Node.js, PostgreSQL)
+- Crear un portafolio de proyectos
+- Practicar integración de múltiples tecnologías
 
 ## 📄 Licencia
 
-Este proyecto es una demostración de habilidades técnicas y puede ser usado como referencia para proyectos similares.
-
-## 👨‍💻 Desarrollo
-
-Desarrollado con Angular y tecnologías modernas para demostrar capacidades avanzadas en desarrollo web frontend.
+Este proyecto es de código abierto para fines educativos y demostración personal.
 
 ---
 
-**¡Disfruta explorando la plataforma!** 🎮✨
+**Desarrollado con ❤️ por Eddi Andreé Salazar Matos**
 
+*Para demostración de habilidades técnicas y aprendizaje*

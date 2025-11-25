@@ -11,7 +11,6 @@ import { HeroSectionComponent } from './components/hero-section/hero-section.com
 import { GameCardComponent } from './components/game-card/game-card.component';
 import { Background3dComponent } from './components/background-3d/background-3d.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GameManagementComponent } from './components/game-management/game-management.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
@@ -26,7 +25,6 @@ import { UserListComponent } from './components/user-list/user-list.component';
     GameCardComponent,
     Background3dComponent,
     LoginComponent,
-    RegisterComponent,
     DashboardComponent,
     GameManagementComponent,
     UserManagementComponent,

@@ -2,6 +2,9 @@
 
 Backend completo con Node.js, Express, PostgreSQL y autenticación JWT.
 
+**Desarrollado por:** Eddi Andreé Salazar Matos  
+**Propósito:** Fines educativos y demostración personal
+
 ## Características
 
 - ✅ Autenticación JWT
@@ -23,19 +26,27 @@ npm install
 
 2. Configurar variables de entorno:
 ```bash
-cp .env.example .env
-# Editar .env con tus credenciales
+# El archivo .env se crea automáticamente con create-env.js
+node create-env.js
+```
+
+O crear manualmente `backend/.env`:
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=battlenet_db
+DB_USER=postgres
+DB_PASSWORD=123456
+JWT_SECRET=battlenet_secret_key_2024_change_in_production
+JWT_EXPIRE=7d
+PORT=3000
+NODE_ENV=development
 ```
 
 3. Configurar PostgreSQL:
-```bash
-# Crear base de datos
-psql -U postgres
-CREATE DATABASE battlenet_db;
-
-# Ejecutar script de inicialización
-psql -U postgres -d battlenet_db -f scripts/init-db.sql
-```
+- Crear base de datos: `battlenet_db`
+- Ejecutar: `backend/scripts/complete_setup.sql` en pgAdmin
+- O usar Python: `python setup.py`
 
 4. Iniciar servidor:
 ```bash
@@ -61,7 +72,7 @@ npm start
 - `DELETE /api/games/:id` - Eliminar juego (Admin)
 
 ### Usuarios
-- `GET /api/users` - Listar usuarios (Admin)
+- `GET /api/users` - Listar usuarios (Autenticado)
 - `PUT /api/users/:id` - Actualizar usuario
 - `PUT /api/users/:id/password` - Cambiar contraseña
 - `PUT /api/users/:id/role` - Cambiar rol (Admin)
@@ -83,22 +94,15 @@ npm start
 - `?search=diablo` - Búsqueda
 - `?sort=title&order=asc` - Ordenar
 
-### Usuarios
-- `?page=1` - Página
-- `?limit=10` - Límite
-- `?role=admin` - Filtrar por rol
-- `?search=john` - Búsqueda
+## 🔐 Credenciales por Defecto
 
-## Autenticación
+**Admin:**
+- Email: `admin@battlenet.com`
+- Password: `admin123`
 
-Incluir token en header:
-```
-Authorization: Bearer <token>
-```
+## 📝 Notas
 
-## Roles
-
-- **admin**: Acceso completo
-- **moderator**: Puede crear/editar games
-- **user**: Solo lectura
-
+- Este backend es parte de un proyecto educativo
+- Inspirado en Battle.net para demostración
+- Registra cuentas de usuarios generales
+- Solo para fines educativos y demostración personal
