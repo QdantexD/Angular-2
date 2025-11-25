@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GameManagementComponent } from './components/game-management/game-management.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserManagementComponent } from './components/user-management/user-manag
     RegisterComponent,
     DashboardComponent,
     GameManagementComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

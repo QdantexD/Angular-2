@@ -1,8 +1,12 @@
 const express = require('express');
 const { query } = require('../config/database');
 const { authenticate } = require('../middleware/auth');
+const axios = require('axios');
 
 const router = express.Router();
+
+// Python service URL
+const PYTHON_SERVICE = process.env.PYTHON_SERVICE_URL || 'http://localhost:5000';
 
 // Get dashboard stats
 router.get('/stats', authenticate, async (req, res) => {
@@ -122,6 +126,32 @@ router.get('/analytics', authenticate, async (req, res) => {
   } catch (error) {
     console.error('Analytics error:', error);
     res.status(500).json({ error: 'Failed to fetch analytics' });
+  }
+});
+
+// Get advanced analytics from Python service
+router.get('/analytics/advanced', authenticate, async (req, res) => {
+  try {
+    const response = await axios.get(`${PYTHON_SERVICE}/api/analytics/advanced`);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Advanced analytics error:', error.message);
+    // Fallback to basic analytics if Python service is unavailable
+    res.status(500).json({ 
+      error: 'Python analytics service unavailable',
+      message: 'Falling back to basic analytics'
+    });
+  }
+});
+
+// Get predictions from Python service
+router.get('/analytics/predictions', authenticate, async (req, res) => {
+  try {
+    const response = await axios.get(`${PYTHON_SERVICE}/api/analytics/predictions`);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Predictions error:', error.message);
+    res.status(500).json({ error: 'Predictions service unavailable' });
   }
 });
 

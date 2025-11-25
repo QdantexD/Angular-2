@@ -46,6 +46,10 @@ router.post('/register', [
     const user = result.rows[0];
 
     // Generate token
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not configured');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       process.env.JWT_SECRET,
@@ -106,6 +110,10 @@ router.post('/login', [
     }
 
     // Generate token
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not configured');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       process.env.JWT_SECRET,

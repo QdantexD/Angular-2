@@ -6,8 +6,8 @@ const { authenticate, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Get all users (Admin only)
-router.get('/', authenticate, authorize('admin'), [
+// Get all users (Authenticated users can view, admin can manage)
+router.get('/', authenticate, [
   queryValidator('page').optional().isInt({ min: 1 }),
   queryValidator('limit').optional().isInt({ min: 1, max: 100 }),
   queryValidator('role').optional().isIn(['admin', 'moderator', 'user']),

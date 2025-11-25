@@ -1,0 +1,72 @@
+<div class="user-list-container">
+  <div class="user-list-header">
+    <h1 class="neon-text">👥 Usuarios Registrados</h1>
+    <p class="subtitle">Lista de todos los usuarios en PostgreSQL</p>
+    <button class="btn-refresh" (click)="refresh()" [disabled]="loading">
+      🔄 {{ loading ? 'Cargando...' : 'Actualizar' }}
+    </button>
+  </div>
+
+  <div *ngIf="error" class="error-alert">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading && users.length === 0" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando usuarios...</p>
+  </div>
+
+  <div *ngIf="!loading && users.length === 0 && !error" class="empty-state">
+    <p>No hay usuarios registrados aún</p>
+  </div>
+
+  <div *ngIf="users.length > 0" class="users-grid">
+    <div *ngFor="let user of users" class="user-card glass">
+      <div class="user-header">
+        <span class="role-icon">{{ getRoleIcon(user.role) }}</span>
+        <span class="role-badge" [style.color]="getRoleColor(user.role)">
+          {{ user.role.toUpperCase() }}
+        </span>
+      </div>
+      
+      <div class="user-info">
+        <div class="user-field">
+          <label>ID:</label>
+          <span>{{ user.id }}</span>
+        </div>
+        
+        <div class="user-field">
+          <label>Username:</label>
+          <span class="username">{{ user.username }}</span>
+        </div>
+        
+        <div class="user-field">
+          <label>Email:</label>
+          <span class="email">{{ user.email }}</span>
+        </div>
+        
+        <div class="user-field" *ngIf="user.full_name">
+          <label>Nombre:</label>
+          <span>{{ user.full_name }}</span>
+        </div>
+        
+        <div class="user-field">
+          <label>Estado:</label>
+          <span [class.active]="user.is_active" [class.inactive]="!user.is_active">
+            {{ user.is_active ? '✅ Activo' : '❌ Inactivo' }}
+          </span>
+        </div>
+        
+        <div class="user-field">
+          <label>Registrado:</label>
+          <span class="date">{{ user.created_at | date:'short' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="users.length > 0" class="stats">
+    <p>Total de usuarios: <strong>{{ users.length }}</strong></p>
+  </div>
+</div>
+

@@ -41,22 +41,38 @@ export class RegisterComponent implements OnInit {
       this.loading = true;
       this.error = '';
 
+      const formData = {
+        username: this.registerForm.value.username,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        full_name: this.registerForm.value.full_name || null
+      };
+
+      console.log('📝 Registrando usuario:', { ...formData, password: '***' });
+
       this.authService.register(
-        this.registerForm.value.username,
-        this.registerForm.value.email,
-        this.registerForm.value.password,
-        this.registerForm.value.full_name
+        formData.username,
+        formData.email,
+        formData.password,
+        formData.full_name
       ).subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('✅ Usuario registrado exitosamente:', response.user);
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.error = err.error?.error || 'Registration failed';
+          console.error('❌ Error en registro:', err);
+          this.error = err.error?.error || err.error?.message || 'Error al registrar. Intenta nuevamente.';
           this.loading = false;
         },
         complete: () => {
           this.loading = false;
         }
+      });
+    } else {
+      // Marcar todos los campos como touched para mostrar errores
+      Object.keys(this.registerForm.controls).forEach(key => {
+        this.registerForm.get(key)?.markAsTouched();
       });
     }
   }
