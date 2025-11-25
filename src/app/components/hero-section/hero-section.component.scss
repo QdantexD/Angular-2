@@ -1,0 +1,227 @@
+.hero-section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 2rem;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-title-container {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  perspective: 1000px;
+}
+
+.title-line {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.title-word {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #00f0ff;
+  text-shadow: 
+    0 0 10px rgba(0, 240, 255, 0.9),
+    0 0 20px rgba(0, 240, 255, 0.7),
+    0 0 30px rgba(0, 240, 255, 0.5),
+    0 0 40px rgba(0, 240, 255, 0.3);
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  
+  &.title-main {
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    text-shadow: 
+      0 0 15px rgba(0, 240, 255, 1),
+      0 0 30px rgba(0, 240, 255, 0.9),
+      0 0 45px rgba(0, 240, 255, 0.7),
+      0 0 60px rgba(0, 240, 255, 0.5);
+    letter-spacing: 6px;
+  }
+}
+
+.title-line-1 {
+  .title-word:first-child {
+    margin-right: auto;
+  }
+}
+
+.title-line-3 {
+  .title-word {
+    margin-left: auto;
+  }
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 3rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: 400;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00f0ff, #b026ff);
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(0, 240, 255, 0.7);
+  }
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(5px);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00f0ff;
+    color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+  }
+}
+
+.hero-glow-orb {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 60px;
+  background: radial-gradient(ellipse, rgba(0, 240, 255, 0.6), transparent);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: orb-pulse 3s ease-in-out infinite;
+  z-index: 5;
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+}
+
+@keyframes orb-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.scroll-arrow {
+  width: 30px;
+  height: 50px;
+  border: 2px solid #00f0ff;
+  border-radius: 25px;
+  position: relative;
+  animation: scroll-bounce 2s infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #00f0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00f0ff;
+    animation: scroll-dot 2s infinite;
+  }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+@keyframes scroll-dot {
+  0% { opacity: 1; top: 10px; }
+  50% { opacity: 0.3; top: 30px; }
+  100% { opacity: 1; top: 10px; }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

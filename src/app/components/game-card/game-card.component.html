@@ -1,0 +1,48 @@
+<div class="game-card glass" #card [style.border-color]="game.color">
+  <div class="card-image-container">
+    <div class="card-image" 
+         [style.background-image]="'url(' + game.image + ')'"
+         #image></div>
+    <div class="card-overlay" [style.background]="'linear-gradient(to bottom, transparent, ' + game.color + ')'"></div>
+    
+    <div class="card-badge-container">
+      <div *ngIf="game.badge === 'NEW'" class="card-badge badge-new">NUEVO</div>
+      <div *ngIf="game.badge === 'PREORDER'" class="card-badge badge-preorder">PRECOMPRA</div>
+      <div *ngIf="game.badge === 'SALE' && game.discount" class="card-badge badge-sale">-{{ game.discount }}%</div>
+      <div *ngIf="game.badge === 'FREE'" class="card-badge badge-free">GRATIS</div>
+    </div>
+
+    <div *ngIf="game.logo" class="card-logo">{{ game.logo }}</div>
+  </div>
+  
+  <div class="card-content">
+    <div class="card-header">
+      <h3 class="card-title">{{ game.title }}</h3>
+      <p *ngIf="game.subtitle" class="card-subtitle">{{ game.subtitle }}</p>
+    </div>
+    
+    <p class="card-description">{{ game.description }}</p>
+    
+    <div class="card-category">{{ game.category }}</div>
+
+    <div class="card-footer">
+      <div class="card-pricing" *ngIf="!game.isFree">
+        <div class="price-container">
+          <span class="current-price">{{ game.price }}</span>
+          <span *ngIf="game.originalPrice" class="original-price">{{ game.originalPrice }}</span>
+        </div>
+      </div>
+      <div *ngIf="game.isFree" class="free-badge">Juega gratis</div>
+    </div>
+
+    <button class="card-button" [style.color]="game.color">
+      <span>{{ game.isFree ? 'Jugar ahora' : 'Comprar ahora' }}</span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="card-glow" [style.box-shadow]="'0 0 30px ' + game.color"></div>
+</div>
+

@@ -1,0 +1,18 @@
+<div class="home-container">
+  <app-hero-section></app-hero-section>
+  
+  <section class="games-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title" #sectionTitle>Recomendado</h2>
+      </div>
+      
+      <div class="games-grid">
+        <div #gameCardWrapper *ngFor="let game of games" class="game-card-wrapper">
+          <app-game-card [game]="game"></app-game-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
